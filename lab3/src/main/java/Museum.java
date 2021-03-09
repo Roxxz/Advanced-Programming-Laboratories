@@ -1,37 +1,40 @@
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.time.LocalTime;
 
-public class Museum {
-    private String name;
-    private Map<String, Integer> map = new HashMap<>();
+public class Museum extends Location implements Visitable, Payable{
+
+    private LocalTime openingHour = defaultOpeningHour();
+    private LocalTime closingHour = defaultClosingHour();
+    private double price = 0;
 
     Museum(){}
 
-    public String getName() {
-        return name;
+    @Override
+    public LocalTime getOpeningHour() {
+        return this.openingHour;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    @Override
+    public LocalTime getClosingHour() {
+        return this.closingHour;
     }
 
-    public void addMap(String location, int cost){
-        map.put(location, cost);
+    @Override
+    public void setOpeningHour(LocalTime hour) {
+        this.openingHour = hour;
     }
 
-    public void printMapMuseum() {
-        printAll(map, name);
+    @Override
+    public void setClosingHour(LocalTime hour) {
+        this.closingHour = hour;
     }
 
-    static void printAll(Map<String, Integer> map, String name) {
-        Set set = map.entrySet();
-        Iterator itr = set.iterator();
-        while (itr.hasNext()) {
-            Map.Entry entry = (Map.Entry) itr.next();
-            System.out.println(name + " to " + entry.getKey() + "-> " + entry.getValue());
-            System.lineSeparator();
-        }
+    @Override
+    public double getPrice() {
+        return this.price;
+    }
+
+    @Override
+    public void setPrice(double price) {
+        this.price = price;
     }
 }

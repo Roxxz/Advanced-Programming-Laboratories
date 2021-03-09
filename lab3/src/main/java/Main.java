@@ -1,46 +1,67 @@
+import java.time.LocalTime;
+
 public class Main {
     public static void main(String[] args) {
 
-        Hotel v1 = new Hotel();
-        Museum v2 = new Museum();
-        Museum v3 = new Museum();
-        Church v4 = new Church();
-        Church v5 = new Church();
-        Restaurant v6 = new Restaurant();
+        Hotel location1 = new Hotel();
+        Museum location2 = new Museum();
+        Museum location3 = new Museum();
+        Church location4 = new Church();
+        Church location5 = new Church();
+        Restaurant location6 = new Restaurant();
+        Church location7 = new Church();
 
-        v1.setName("Hotel");
-        v2.setName("Museum A");
-        v3.setName("Museum B");
-        v4.setName("Church A");
-        v5.setName("Church B");
-        v6.setName("Restaurant");
+        location1.setName("Hotel");
+        location1.setRank(5);
 
-        City city = new City();
-        city.setName("Madrid");
-        city.addLocation(v1.getName());
-        city.addLocation(v2.getName());
-        city.addLocation(v3.getName());
-        city.addLocation(v4.getName());
-        city.addLocation(v5.getName());
-        city.addLocation(v6.getName());
+        location2.setName("Museum A");
+        location2.setPrice(20.5);
 
-        v1.addMap(v2.getName(), 10);
-        v1.addMap(v3.getName(), 50);
-        v2.addMap(v3.getName(), 20);
-        v3.addMap(v2.getName(), 20);
-        v2.addMap(v4.getName(), 20);
-        v2.addMap(v5.getName(), 10);
-        v3.addMap(v4.getName(), 20);
-        v4.addMap(v5.getName(), 30);
-        v5.addMap(v4.getName(), 30);
-        v4.addMap(v6.getName(), 10);
-        v5.addMap(v6.getName(), 20);
+        location3.setName("Museum B");
+        location3.setPrice(15);
 
-        v1.printMapHotel();
-        v2.printMapMuseum();
-        v3.printMapMuseum();
-        v4.printMapChurch();
-        v5.printMapChurch();
-        v6.printMapRestaurant();
+        location4.setName("Church A");
+        location4.setOpeningHour(LocalTime.of(7, 0));
+        location4.setClosingHour(LocalTime.of(21, 0));
+
+        location5.setName("Church B");
+        location5.setOpeningHour(LocalTime.of(8, 0));
+        location5.setClosingHour(LocalTime.of(22, 0));
+
+        location6.setName("Restaurant");
+        location6.setRank(2);
+
+        location7.setName("Church C");
+        location7.setOpeningHour(LocalTime.of(6, 30));
+        location7.setClosingHour(LocalTime.of(13, 0));
+
+        location1.setCost(location2, 10);
+        location1.setCost(location3, 50);
+        location2.setCost(location3, 20);
+        location2.setCost(location4, 20);
+        location2.setCost(location5, 10);
+        location3.setCost(location4, 20);
+        location4.setCost(location5, 30);
+        location4.setCost(location6, 10);
+        location5.setCost(location6, 20);
+
+        City c = new City();
+        c.setCityName("Tokyo");
+        c.addLocation(location1);
+        c.addLocation(location2);
+        c.addLocation(location3);
+        c.addLocation(location4);
+        c.addLocation(location5);
+        c.addLocation(location6);
+        c.addLocation(location7);
+
+        TravelPlan plan = new TravelPlan(c);
+
+        System.out.println(Visitable.getVisitingDuration(location4));
+        System.out.println(location2.getClosingHour());
+        System.out.println(location2.getPrice());
+        System.out.println(location6.getRank());
+        c.displayVisitableLocations();
+        plan.displayPreferences();
     }
 }

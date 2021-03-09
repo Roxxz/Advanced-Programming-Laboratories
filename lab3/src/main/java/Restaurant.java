@@ -1,25 +1,17 @@
-import java.util.HashMap;
-import java.util.Map;
 
-public class Restaurant {
-    private String name;
-    private Map<String, Integer> map = new HashMap<>();
+public class Restaurant extends Location implements Classifiable{
+
+    private int rank;
 
     Restaurant(){}
 
-    public String getName() {
-        return name;
+    @Override
+    public int getRank() {
+        return this.rank;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void addMap(String location, int cost){
-        map.put(location, cost);
-    }
-
-    public void printMapRestaurant() {
-        Museum.printAll(map, name);
+    @Override
+    public void setRank(int rank) {
+        this.rank = rank;
     }
 }

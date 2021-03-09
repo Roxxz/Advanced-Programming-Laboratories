@@ -1,25 +1,28 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.time.LocalTime;
 
-public class Church {
-    private String name;
-    private Map<String, Integer> map = new HashMap<>();
+public class Church extends Location implements Visitable{
+    private LocalTime openingHour = defaultOpeningHour();
+    private LocalTime closingHour = defaultClosingHour();
 
     Church(){}
 
-    public String getName() {
-        return name;
+    @Override
+    public LocalTime getOpeningHour() {
+        return this.openingHour;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    @Override
+    public LocalTime getClosingHour() {
+        return this.closingHour;
     }
 
-    public void addMap(String location, int cost){
-        map.put(location, cost);
+    @Override
+    public void setOpeningHour(LocalTime hour) {
+        this.openingHour = hour;
     }
 
-    public void printMapChurch() {
-        Museum.printAll(map, name);
+    @Override
+    public void setClosingHour(LocalTime hour) {
+        this.closingHour = hour;
     }
 }

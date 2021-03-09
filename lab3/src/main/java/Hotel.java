@@ -1,25 +1,27 @@
-import java.util.HashMap;
-import java.util.Map;
 
-public class Hotel {
-    private String name;
-    private Map<String, Integer> map = new HashMap<>();
+public class Hotel extends Location implements Payable, Classifiable{
+    private int rank;
+    private double price;
 
     Hotel(){}
 
-    public String getName() {
-        return name;
+    @Override
+    public void setRank(int rank) {
+        this.rank = rank;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    @Override
+    public int getRank() {
+        return this.rank;
     }
 
-    public void addMap(String location, int cost){
-        map.put(location, cost);
+    @Override
+    public double getPrice() {
+        return this.price;
     }
 
-    public void printMapHotel() {
-        Museum.printAll(map, name);
+    @Override
+    public void setPrice(double price) {
+        this.price = price;
     }
 }

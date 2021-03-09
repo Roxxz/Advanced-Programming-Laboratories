@@ -1,18 +1,22 @@
-City.java
- City
-Classifiable.java
- Classifiable
-Visitable.java
- Visitable
 Payable.java
  Payable
+Visitable.java
+ Visitable
+Classifiable.java
+ Classifiable
+City.java
+ City
 Church.java
  Church
-Main.java
- Main
-Restaurant.java
- Restaurant
-Hotel.java
- Hotel
 Museum.java
  Museum
+Restaurant.java
+ Restaurant
+Location.java
+ Location
+Hotel.java
+ Hotel
+TravelPlan.java
+ TravelPlan
+Main.java
+ Main
