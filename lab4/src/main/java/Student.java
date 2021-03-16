@@ -1,12 +1,19 @@
-import java.util.ArrayList;
-import java.util.List;
 
 public class Student {
-    private Integer id;
-    private List<Highschool> highschoolPreferences;
+    public int id;
+    private String name;
+    private double score;
+    public boolean available = true;
+
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
+    }
 
     Student(int id){
-        this.setHighschoolPreferences(new ArrayList<>());
         this.setId(id);
     }
 
@@ -18,28 +25,16 @@ public class Student {
         this.id = id;
     }
 
-    public List<Highschool> getHighschoolPreferences() {
-        return highschoolPreferences;
+    public String getName() {
+        return name;
     }
 
-    public void setHighschoolPreferences(List<Highschool> highschoolPreferences) {
-        this.highschoolPreferences = highschoolPreferences;
-    }
-
-    public void addHighschool(Highschool h){
-        highschoolPreferences.add(h);
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
     public String toString() {
-        String s = "[";
-        for(Highschool h : highschoolPreferences){
-            s = s + h.getId() + ',';
-        }
-        s = s + ']';
-        return "Student{" +
-                "id=" + id +
-                ", highschoolPreferences=" + highschoolPreferences +
-                '}';
+        return "Student{" + id + '}';
     }
 }

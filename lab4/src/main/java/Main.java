@@ -1,41 +1,51 @@
+import com.github.javafaker.Faker;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 public class Main {
     public static void main(String[] args) {
-        Student s0 = new Student(0);
-        Student s1 = new Student(1);
-        Student s2 = new Student(2);
-        Student s3 = new Student(3);
+        Student[] students = IntStream.rangeClosed(0, 3).mapToObj(i -> new Student(i)).toArray(Student[]::new);
+        HighSchool[] highSchool = IntStream.rangeClosed(0, 2).mapToObj(i -> new HighSchool(i)).toArray(HighSchool[]::new);
 
-        Highschool h0 = new Highschool(0);
-        Highschool h1 = new Highschool(1);
-        Highschool h2 = new Highschool(2);
+        List<Student> studentsList = new LinkedList<>();
+        studentsList.addAll(Arrays.asList(students));
 
-        s0.addHighschool(h0);
-        s0.addHighschool(h1);
-        s0.addHighschool(h2);
+        Set<HighSchool> highSchoolsSet = new TreeSet<>();
+        highSchoolsSet.addAll(Arrays.asList(highSchool));
 
-        s1.addHighschool(h0);
-        s1.addHighschool(h1);
-        s1.addHighschool(h2);
+        List<Student> newSortedStudentsList = studentsList.stream().sorted(Comparator.comparing(Student::getId)).collect(Collectors.toList());
 
-        s2.addHighschool(h0);
-        s2.addHighschool(h1);
+        Map<Student, List<HighSchool>> studentsInformation = new HashMap<>();
+        studentsInformation.put(students[0], Arrays.asList(highSchool[0], highSchool[1], highSchool[2]));
+        studentsInformation.put(students[1], Arrays.asList(highSchool[0], highSchool[1], highSchool[2]));
+        studentsInformation.put(students[2], Arrays.asList(highSchool[0], highSchool[1]));
+        studentsInformation.put(students[3], Arrays.asList(highSchool[0], highSchool[2]));
 
-        s3.addHighschool(h0);
-        s3.addHighschool(h2);
+        studentsInformation.forEach((key, value) -> System.out.println(key + ":" + value));
 
-        h0.addStudent(s3);
-        h0.addStudent(s0);
-        h0.addStudent(s1);
-        h0.addStudent(s2);
+        Map<HighSchool, List<Student>> highSchoolInformation = new HashMap<>();
+        highSchoolInformation.put(highSchool[0], Arrays.asList(students[3], students[0], students[1], students[2]));
+        highSchoolInformation.put(highSchool[1], Arrays.asList(students[0], students[1], students[2]));
+        highSchoolInformation.put(highSchool[2], Arrays.asList(students[0], students[1], students[3]));
 
-        h1.addStudent(s0);
-        h1.addStudent(s1);
-        h1.addStudent(s2);
+        highSchoolInformation.forEach((key, value) -> System.out.println(key + ":" + value));
 
-        h2.addStudent(s0);
-        h2.addStudent(s1);
-        h2.addStudent(s3);
+        System.out.println("The students who accept highSchools 0, 1 and 2 are: ");
+        System.out.println(Arrays.toString(studentsList.stream().filter(e -> studentsInformation.get(e).contains(highSchool[0])
+                && studentsInformation.get(e).contains(highSchool[1])
+                && studentsInformation.get(e).contains(highSchool[2])).toArray()));
 
+        System.out.println("The highSchools who have student 0 as their top preference are:");
+        System.out.println(Arrays.toString(highSchoolsSet.stream().filter(std -> highSchoolInformation.get(std).contains(students[0])).toArray()));
 
+        Faker faker = new Faker();
+        for(Student s : students){ s.setName(faker.name().fullName()); }
+        for(HighSchool h : highSchool){ h.setName(faker.university().name()); }
+
+        Problem problem = new Problem();
+        Solution solution = new Solution(problem);
+        List<HighSchool> highSchoolsList = new ArrayList<>(highSchoolsSet);
+        solution.getMatching(studentsList, highSchoolsList);
     }
 }
