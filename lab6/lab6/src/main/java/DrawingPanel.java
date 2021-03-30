@@ -13,7 +13,6 @@ public class DrawingPanel extends JPanel {
     Point point2 = new Point();
     BufferedImage image;
     Graphics2D graphics;
-    Graphics2D rGraphics;
 
     public DrawingPanel(MainFrame frame) {
         this.frame = frame;
@@ -26,8 +25,7 @@ public class DrawingPanel extends JPanel {
         graphics = image.createGraphics();
         graphics.setColor(Color.WHITE);
         graphics.fillRect(0, 0, W, H);
-        rGraphics.setColor(Color.WHITE);
-        rGraphics.fillRect(0, 0, W, H);
+
     }
 
     private void init() {
@@ -84,15 +82,14 @@ public class DrawingPanel extends JPanel {
                     frame.configPanel.currentShape = new RegularPolygon(x,y,radius,sides);
                     graphics.fill( frame.configPanel.currentShape );
                     frame.configPanel.shapes.add( frame.configPanel.currentShape );
-                    repaint();
                     break;
                 case "Circle":
                     frame.configPanel.currentShape = new CircleShape(x, y, radius);
                     graphics.fill( frame.configPanel.currentShape );
                     frame.configPanel.shapes.add( frame.configPanel.currentShape );
-                    repaint();
                     break;
                 case "Free Drawing":
+                    setDoubleBuffered(false);
                     setDoubleBuffered(false);
                     addMouseListener(new MouseAdapter() {
                         public void mousePressed(MouseEvent e) {
@@ -100,6 +97,7 @@ public class DrawingPanel extends JPanel {
                             point1.y = e.getY();
                         }
                     });
+
                     addMouseMotionListener(new MouseMotionAdapter() {
                         public void mouseDragged(MouseEvent e) {
                             point2.x = e.getX();
@@ -108,7 +106,6 @@ public class DrawingPanel extends JPanel {
                             if (graphics != null) {
                                 graphics.drawLine(point1.x, point1.y, point2.x, point2.y);
                                 repaint();
-                                // store current coords x,y as olds x,y
                                 point1.x = point2.x;
                                 point1.y = point2.y;
                             }
@@ -121,15 +118,17 @@ public class DrawingPanel extends JPanel {
 
     protected void reset(){
         frame.configPanel.shapes.clear();
-        repaint();
+        createOffscreenImage();
+        update( graphics );
     }
 
     public void clearLastShape()
     {
         int size = frame.configPanel.shapes.size();
-        if(size > 0)
-        {
-            frame.configPanel.shapes.remove(size - 1);
+        if(size > 0){
+            graphics.setColor( Color.WHITE );
+            graphics.fill( frame.configPanel.shapes.get( size-1 ) );
+            frame.configPanel.shapes.remove( frame.configPanel.shapes.get( size-1 ) );
         }
         repaint();
     }
@@ -141,11 +140,7 @@ public class DrawingPanel extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D)g.create();
-        for (Shape shape : frame.configPanel.shapes) {
-            g2d.draw(shape);
-        }
-        g2d.dispose();
+        g.drawImage( image, 0, 0, this );
+        update( g );
     }
 }

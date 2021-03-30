@@ -18,7 +18,7 @@ public class ConfigPanel extends JPanel {
     private void init() {
         JLabel sidesLabel = new JLabel( "Number of sides:" );
         sidesNumber = new JSpinner( new SpinnerNumberModel( 0, 0, 100, 1 ) );
-        sidesNumber.setValue(6); //default number of sides
+        sidesNumber.setValue(6);
 
         JLabel colorLabel = new JLabel( "Color:" );
         JLabel shapeLabel = new JLabel( "Shape:" );
