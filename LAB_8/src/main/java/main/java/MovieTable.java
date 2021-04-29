@@ -49,7 +49,7 @@ public class MovieTable {
 
     public int findMovieById(int id) throws SQLException
     {
-        Statement myStatement = conn.createStatement();
+        Statement myStatement = Database.Database().createStatement();
         ResultSet myResult = myStatement.executeQuery(String.format("SELECT * FROM MOVIE WHERE MOVIEID=%d",id));
         if (myResult.next()) {
             System.out.println("Found:");
